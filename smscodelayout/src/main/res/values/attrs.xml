@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SmsCodeView">
+        <attr name="numberBackground" format="color|reference"/>
+        <attr name="titleText" format="string"/>
+        <attr name="titleTextColor" format="color|reference"/>
+        <attr name="actionText" format="string"/>
+        <attr name="actionTextColor" format="color|reference"/>
+        <attr name="buttonStyle" format="reference"/>
+    </declare-styleable>
+</resources>
