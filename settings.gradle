@@ -1,1 +1,1 @@
-include ':app', ':smscodelayout'
+include ':sample', ':smscodelayout'
