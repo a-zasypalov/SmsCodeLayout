@@ -1,6 +1,22 @@
+apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+
+publish {
+
+    def groupProjectID = 'com.gaoyun.smscodelayout'
+    def artifactProjectID = 'sms_code_layout'
+    def publishVersionID = '0.1.0'
+
+    userOrg = 'gaoyundexinmen'
+    repoName = 'SmsCodeLayout'
+    groupId = groupProjectID
+    artifactId = artifactProjectID
+    publishVersion = publishVersionID
+    desc = 'Android library for easy implementing customizable layout for input sms code'
+    website = 'https://github.com/gaoyundexinmen/SmsCodeLayout'
+}
 
 android {
     compileSdkVersion 29
@@ -10,7 +26,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "0.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
