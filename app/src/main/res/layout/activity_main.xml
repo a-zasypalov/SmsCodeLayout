@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <com.gaoyun.smscodelayout.SmsCodeView
+        android:id="@+id/smsCodeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:actionText="Action text"
+        app:actionTextColor="@color/colorAccent"
+        app:buttonStyle="@style/AppTheme"
+        app:numberBackground="@drawable/rounded_card_grey"
         app:titleText="Title"
-        app:actionText="Action text"/>
+        app:titleTextColor="@color/colorBlue" />
 
 </FrameLayout>
