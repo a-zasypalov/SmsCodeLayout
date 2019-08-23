@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -29,9 +30,11 @@ class SmsCodeView@JvmOverloads constructor(
 
             setTitleText(styledAttributes.getString(R.styleable.SmsCodeView_titleText))
             setTitleTextColor(styledAttributes.getColor(R.styleable.SmsCodeView_titleTextColor, ContextCompat.getColor(context, R.color.textColorPrimary)))
+            setTitleTextSize(styledAttributes.getDimension(R.styleable.SmsCodeView_titleTextSize, 14f))
 
             setActionText(styledAttributes.getString(R.styleable.SmsCodeView_actionText))
             setActionTextColor(styledAttributes.getColor(R.styleable.SmsCodeView_actionTextColor, ContextCompat.getColor(context, R.color.colorBlue)))
+            setActionTextSize(styledAttributes.getDimension(R.styleable.SmsCodeView_actionTextSize, 14f))
 
             setMechanic()
 
@@ -77,6 +80,10 @@ class SmsCodeView@JvmOverloads constructor(
         lblTitle.setTextColor(value)
     }
 
+    fun setTitleTextSize(value: Float){
+        lblTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
+    }
+
     fun setActionText(value: String?){
         value?.let {
             btnAction.text = value
@@ -86,6 +93,10 @@ class SmsCodeView@JvmOverloads constructor(
 
     fun setActionTextColor(@ColorInt value: Int){
         btnAction.setTextColor(value)
+    }
+
+    fun setActionTextSize(value: Float){
+        btnAction.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
     }
 
     fun setOnActionClickListener(onClickListener: OnClickListener){
