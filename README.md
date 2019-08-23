@@ -27,10 +27,14 @@ Just include SmsCodeView in your layout:
         android:layout_height="wrap_content"
         app:actionText="Action text"
         app:actionTextColor="@color/colorAccent"
+        app:actionTextSize="16sp"
         app:buttonStyle="@style/AppTheme"
         app:numberBackground="@drawable/rounded_card_grey"
+        app:smsActionTextStyle="italic"
+        app:smsTitleTextStyle="bold"
         app:titleText="Title"
-        app:titleTextColor="@color/colorBlue" />
+        app:titleTextColor="@color/colorBlue"
+        app:titleTextSize="24sp" />
 ```
 You can customize attributes in Activity/Fragment/etc too:
 ```kotlin
@@ -43,8 +47,14 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setActionText("Action")
         smsCodeView.setTitleText("Title")
 
+        smsCodeView.setTitleTextSize(24f)
+        smsCodeView.setActionTextSize(16f)
+
         smsCodeView.setTitleTextColor(resources.getColor(R.color.colorPrimary))
         smsCodeView.setActionTextColor(resources.getColor(R.color.colorAccent))
+
+        smsCodeView.setTitleTextStyle(SmsCodeView.BOLD_STYLE)
+        smsCodeView.setActionTextStyle(SmsCodeView.BOLD_ITALIC_STYLE)
 
         smsCodeView.getCode() //returns string like "1234"
         smsCodeView.setCode("1234")
