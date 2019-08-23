@@ -9,7 +9,7 @@ ext {
 
     publishedGroupId = 'com.gaoyun.smscodelayout'
     libraryName = 'smscodelayout'
-    artifact = 'sms_code_layout'
+    artifact = 'smscodelayout'
 
     libraryDescription = 'Light and simple view for input 4-digit code from SMS'
 
