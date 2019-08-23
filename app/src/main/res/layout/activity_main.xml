@@ -12,9 +12,11 @@
         android:layout_height="wrap_content"
         app:actionText="Action text"
         app:actionTextColor="@color/colorAccent"
+        app:actionTextSize="16sp"
         app:buttonStyle="@style/AppTheme"
         app:numberBackground="@drawable/rounded_card_grey"
         app:titleText="Title"
-        app:titleTextColor="@color/colorBlue" />
+        app:titleTextColor="@color/colorBlue"
+        app:titleTextSize="24sp"/>
 
 </FrameLayout>

@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setActionText("Action")
         smsCodeView.setTitleText("Title")
 
+        smsCodeView.setTitleTextSize(24f)
+        smsCodeView.setActionTextSize(16f)
+
         smsCodeView.setTitleTextColor(resources.getColor(R.color.colorPrimary))
         smsCodeView.setActionTextColor(resources.getColor(R.color.colorAccent))
 
