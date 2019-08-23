@@ -2,6 +2,8 @@ package com.gaoyun.smscodelayout
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -22,6 +24,13 @@ class SmsCodeView@JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr)  {
 
+    companion object{
+        const val NORMAL_STYLE = 0
+        const val BOLD_STYLE = 1
+        const val ITALIC_STYLE = 2
+        const val BOLD_ITALIC_STYLE = 3
+    }
+
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sms_code, this, true)
 
@@ -31,10 +40,12 @@ class SmsCodeView@JvmOverloads constructor(
             setTitleText(styledAttributes.getString(R.styleable.SmsCodeView_titleText))
             setTitleTextColor(styledAttributes.getColor(R.styleable.SmsCodeView_titleTextColor, ContextCompat.getColor(context, R.color.textColorPrimary)))
             setTitleTextSize(styledAttributes.getDimension(R.styleable.SmsCodeView_titleTextSize, 14f))
+            setTitleTextStyle(styledAttributes.getInt(R.styleable.SmsCodeView_smsTitleTextStyle, NORMAL_STYLE))
 
             setActionText(styledAttributes.getString(R.styleable.SmsCodeView_actionText))
             setActionTextColor(styledAttributes.getColor(R.styleable.SmsCodeView_actionTextColor, ContextCompat.getColor(context, R.color.colorBlue)))
             setActionTextSize(styledAttributes.getDimension(R.styleable.SmsCodeView_actionTextSize, 14f))
+            setActionTextStyle(styledAttributes.getInt(R.styleable.SmsCodeView_smsActionTextStyle, NORMAL_STYLE))
 
             setMechanic()
 
@@ -84,6 +95,15 @@ class SmsCodeView@JvmOverloads constructor(
         lblTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
     }
 
+    fun setTitleTextStyle(value: Int){
+         lblTitle.typeface = when(value){
+             NORMAL_STYLE -> Typeface.DEFAULT
+             BOLD_STYLE -> Typeface.DEFAULT_BOLD
+             ITALIC_STYLE -> Typeface.create(Typeface.DEFAULT, Typeface.ITALIC)
+             else -> Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC)
+         }
+    }
+
     fun setActionText(value: String?){
         value?.let {
             btnAction.text = value
@@ -97,6 +117,15 @@ class SmsCodeView@JvmOverloads constructor(
 
     fun setActionTextSize(value: Float){
         btnAction.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
+    }
+
+    fun setActionTextStyle(value: Int){
+        btnAction.typeface = when(value){
+            NORMAL_STYLE -> Typeface.DEFAULT
+            BOLD_STYLE -> Typeface.DEFAULT_BOLD
+            ITALIC_STYLE -> Typeface.create(Typeface.DEFAULT, Typeface.ITALIC)
+            else -> Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC)
+        }
     }
 
     fun setOnActionClickListener(onClickListener: OnClickListener){
