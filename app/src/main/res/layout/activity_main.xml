@@ -13,9 +13,11 @@
         app:actionText="Action text"
         app:actionTextColor="@color/colorAccent"
         app:actionTextSize="16sp"
+        app:smsActionTextStyle="italic"
         app:buttonStyle="@style/AppTheme"
         app:numberBackground="@drawable/rounded_card_grey"
         app:titleText="Title"
+        app:smsTitleTextStyle="bold"
         app:titleTextColor="@color/colorBlue"
         app:titleTextSize="24sp"/>
 

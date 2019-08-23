@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setTitleTextColor(resources.getColor(R.color.colorPrimary))
         smsCodeView.setActionTextColor(resources.getColor(R.color.colorAccent))
 
+        smsCodeView.setTitleTextStyle(SmsCodeView.BOLD_STYLE)
+        smsCodeView.setActionTextStyle(SmsCodeView.BOLD_ITALIC_STYLE)
+
         smsCodeView.getCode() //returns string like "1234"
         smsCodeView.setCode("1234")
 
