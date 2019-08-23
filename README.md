@@ -1,6 +1,8 @@
 # SmsCodeLayout
 Simple and customizable view for input a 4-digit code from SMS
 
+<img src="https://github.com/gaoyundexinmen/SmsCodeLayout/raw/master/screenshot.png">
+
 Download
 --------
 [ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.1.1) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.1.1/link)
