@@ -1,9 +1,8 @@
-package com.gaoyun.smscodelayout
+package com.gaoyun.smscodelayout.view
 
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -17,6 +16,7 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.gaoyun.smscodelayout.R
 import kotlinx.android.synthetic.main.view_sms_code.view.*
 
 
@@ -35,17 +35,30 @@ class SmsCodeView@JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_sms_code, this, true)
 
         attrs?.let {
-            val styledAttributes = context.obtainStyledAttributes(it, R.styleable.SmsCodeView, 0, 0)
+            val styledAttributes = context.obtainStyledAttributes(it,
+                R.styleable.SmsCodeView, 0, 0)
 
             setTitleText(styledAttributes.getString(R.styleable.SmsCodeView_titleText))
-            setTitleTextColor(styledAttributes.getColor(R.styleable.SmsCodeView_titleTextColor, ContextCompat.getColor(context, R.color.textColorPrimary)))
+            setTitleTextColor(styledAttributes.getColor(
+                R.styleable.SmsCodeView_titleTextColor, ContextCompat.getColor(context,
+                    R.color.textColorPrimary
+                )))
             setTitleTextSize(styledAttributes.getDimension(R.styleable.SmsCodeView_titleTextSize, 14f))
-            setTitleTextStyle(styledAttributes.getInt(R.styleable.SmsCodeView_smsTitleTextStyle, NORMAL_STYLE))
+            setTitleTextStyle(styledAttributes.getInt(
+                R.styleable.SmsCodeView_smsTitleTextStyle,
+                NORMAL_STYLE
+            ))
 
             setActionText(styledAttributes.getString(R.styleable.SmsCodeView_actionText))
-            setActionTextColor(styledAttributes.getColor(R.styleable.SmsCodeView_actionTextColor, ContextCompat.getColor(context, R.color.colorBlue)))
+            setActionTextColor(styledAttributes.getColor(
+                R.styleable.SmsCodeView_actionTextColor, ContextCompat.getColor(context,
+                    R.color.colorBlue
+                )))
             setActionTextSize(styledAttributes.getDimension(R.styleable.SmsCodeView_actionTextSize, 14f))
-            setActionTextStyle(styledAttributes.getInt(R.styleable.SmsCodeView_smsActionTextStyle, NORMAL_STYLE))
+            setActionTextStyle(styledAttributes.getInt(
+                R.styleable.SmsCodeView_smsActionTextStyle,
+                NORMAL_STYLE
+            ))
 
             setMechanic()
 
