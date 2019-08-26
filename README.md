@@ -5,11 +5,11 @@ Simple and customizable view for input a 4-digit code from SMS
 
 Download
 --------
-[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.1.3) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.1.3/link)
+[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.2.1) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.2.1/link)
 
 Grab via Gradle:
 ```groovy
-implementation 'com.gaoyun.smscodelayout:smscodelayout:0.1.3'
+implementation 'com.gaoyun.smscodelayout:smscodelayout:0.2.1'
 ```
 
 SmsCodeLayout uses the Material library, so you should include it too:
@@ -17,7 +17,7 @@ SmsCodeLayout uses the Material library, so you should include it too:
 implementation 'com.google.android.material:material:1.0.0'
 ```
 
-Using
+Usage
 --------
 Just include SmsCodeView in your layout:
 ```xml
@@ -73,6 +73,54 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+```
+If you want to activate SMS catching you should add permissions to Manifest.xml:
+
+```xml
+<uses-permission android:name="android.permission.RECEIVE_SMS" />
+<uses-permission android:name="android.permission.READ_SMS" />
+```
+
+After that initialize SmsVerifyCatcher:
+
+```kotlin
+private val smsVerifyCatcher = SmsVerifyCatcher(this, object: OnSmsCatchListener<String> {
+   override fun onCatch(message: String) {
+       if(message.isNotEmpty()) {
+           smsCodeView.setCode(message) //send code to smsCodeView
+       }
+   }
+})
+```
+
+Override lifecycle methods and request permissions:
+
+```kotlin
+override fun onStart() {
+        super.onStart()
+        smsVerifyCatcher.onStart()
+}
+
+override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults)
+}
+
+override fun onStop() {
+        super.onStop()
+        smsVerifyCatcher.onStop()
+}
+```
+
+You can filter by phone number or regexp:
+
+```kotlin
+smsVerifyCatcher.setPhoneNumberFilter("PHONE NUMBER")
+smsVerifyCatcher.setFilter("<regexp>")
 ```
 
 License
