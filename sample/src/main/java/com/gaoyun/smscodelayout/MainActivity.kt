@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         smsVerifyCatcher.setPhoneNumberFilter("SMS NUMBER")
+        smsVerifyCatcher.setFilter("<regexp>")
 
     }
 
