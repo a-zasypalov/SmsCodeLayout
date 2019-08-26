@@ -105,7 +105,7 @@ class SmsCodeView@JvmOverloads constructor(
     }
 
     fun setTitleTextSize(value: Float){
-        lblTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
+        lblTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, value)
     }
 
     fun setTitleTextStyle(value: Int){
@@ -129,7 +129,7 @@ class SmsCodeView@JvmOverloads constructor(
     }
 
     fun setActionTextSize(value: Float){
-        btnAction.setTextSize(TypedValue.COMPLEX_UNIT_PX, value)
+        btnAction.setTextSize(TypedValue.COMPLEX_UNIT_SP, value)
     }
 
     fun setActionTextStyle(value: Int){

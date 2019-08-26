@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.gaoyun.smscodelayout.SmsCodeView
+    <com.gaoyun.smscodelayout.view.SmsCodeView
         android:id="@+id/smsCodeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         app:actionText="Action text"
         app:actionTextColor="@color/colorAccent"
         app:actionTextSize="16sp"

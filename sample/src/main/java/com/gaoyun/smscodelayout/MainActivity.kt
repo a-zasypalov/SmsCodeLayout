@@ -3,9 +3,20 @@ package com.gaoyun.smscodelayout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.gaoyun.smscodelayout.catcher.OnSmsCatchListener
+import com.gaoyun.smscodelayout.catcher.SmsVerifyCatcher
+import com.gaoyun.smscodelayout.view.SmsCodeView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val smsVerifyCatcher = SmsVerifyCatcher(this, object: OnSmsCatchListener<String> {
+        override fun onCatch(message: String) {
+            if(message.isNotEmpty()) {
+                smsCodeView.setCode(message)
+            }
+        }
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setActionTextStyle(SmsCodeView.BOLD_ITALIC_STYLE)
 
         smsCodeView.getCode() //returns string like "1234"
-        smsCodeView.setCode("1234")
+        smsCodeView.setCode("")
 
         //if true then when user type last number keyboard will hide
         smsCodeView.hideSoftKeyboardOnLastNumberInput(hide = true, activity = this)
@@ -38,5 +49,27 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setOnActionDoneClickListener {
             //do something
         }
+
+        smsVerifyCatcher.setPhoneNumberFilter("SMS NUMBER")
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        smsVerifyCatcher.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        smsVerifyCatcher.onStop()
     }
 }
