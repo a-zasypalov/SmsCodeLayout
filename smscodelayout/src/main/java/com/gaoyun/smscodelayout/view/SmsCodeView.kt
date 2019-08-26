@@ -149,7 +149,7 @@ class SmsCodeView@JvmOverloads constructor(
         if(hide){
             txtNumber4.addTextChangedListener(object: TextWatcher{
                 override fun afterTextChanged(p0: Editable?) {
-                    hideSoftKeyboard(activity)
+                    if(p0?.length!! > 0) hideSoftKeyboard(activity)
                 }
 
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -196,7 +196,11 @@ class SmsCodeView@JvmOverloads constructor(
 
         txtNumber2.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
-                if (p0?.length!! > 0) txtNumber3.requestFocus()
+                if (p0?.length!! > 0) {
+                    txtNumber3.requestFocus()
+                } else {
+                    txtNumber1.requestFocus()
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -209,7 +213,24 @@ class SmsCodeView@JvmOverloads constructor(
 
         txtNumber3.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
-                if (p0?.length!! > 0) txtNumber4.requestFocus()
+                if (p0?.length!! > 0) {
+                    txtNumber4.requestFocus()
+                } else {
+                    txtNumber2.requestFocus()
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+        })
+
+        txtNumber4.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0?.length!! == 0) txtNumber3.requestFocus()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

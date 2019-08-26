@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setActionTextStyle(SmsCodeView.BOLD_ITALIC_STYLE)
 
         smsCodeView.getCode() //returns string like "1234"
-        smsCodeView.setCode("")
+        smsCodeView.setCode("1234")
 
         //if true then when user type last number keyboard will hide
         smsCodeView.hideSoftKeyboardOnLastNumberInput(hide = true, activity = this)
