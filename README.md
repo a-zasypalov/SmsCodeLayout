@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //...
+
         smsCodeView.setActionText("Action")
         smsCodeView.setTitleText("Title")
 
@@ -80,7 +82,7 @@ val smsRequestCode = 243 //or any other free request code
 val smsCatcher = SmsCatcher(this, smsRequestCode, "YOUR PHONE")
 ```
 
-And in onActivityResult catch the case with your request code:
+In onActivityResult catch the case with your request code:
 
 ```kotlin
 public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -93,6 +95,16 @@ public override fun onActivityResult(requestCode: Int, resultCode: Int, data: In
                 }
             }
     }
+}
+```
+
+And start catch SMS:
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    //..
+    smsCatcher.startCatchSms()
 }
 ```
 
