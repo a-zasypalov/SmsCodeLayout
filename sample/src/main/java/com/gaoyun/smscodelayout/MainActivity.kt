@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val smsRequestCode = 243
-    private val smsCatcher = SmsCatcher(this, smsRequestCode, "+79648453779")
+    private val smsRequestCode = 243 //or any other free request code
+    private val smsCatcher = SmsCatcher(this, smsRequestCode, "YOUR PHONE")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
