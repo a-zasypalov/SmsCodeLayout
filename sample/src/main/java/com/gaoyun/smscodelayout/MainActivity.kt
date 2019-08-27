@@ -1,22 +1,18 @@
 package com.gaoyun.smscodelayout
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.gaoyun.smscodelayout.catcher.OnSmsCatchListener
-import com.gaoyun.smscodelayout.catcher.SmsVerifyCatcher
+import com.gaoyun.smscodelayout.catcher.SmsCatcher
 import com.gaoyun.smscodelayout.view.SmsCodeView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val smsVerifyCatcher = SmsVerifyCatcher(this, object: OnSmsCatchListener<String> {
-        override fun onCatch(message: String) {
-            if(message.isNotEmpty()) {
-                smsCodeView.setCode(message)
-            }
-        }
-    })
+    private val smsRequestCode = 243
+    private val smsCatcher = SmsCatcher(this, smsRequestCode, "+79648453779")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,27 +46,19 @@ class MainActivity : AppCompatActivity() {
             //do something
         }
 
-        smsVerifyCatcher.setPhoneNumberFilter("SMS NUMBER")
-        smsVerifyCatcher.setFilter("<regexp>")
+        smsCatcher.startCatchSms()
 
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        smsVerifyCatcher.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        smsVerifyCatcher.onStop()
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            smsRequestCode ->
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.let {
+                        smsCodeView.setCode(smsCatcher.getCodeFromSms(data))
+                    }
+                }
+        }
     }
 }

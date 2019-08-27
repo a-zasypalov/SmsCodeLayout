@@ -183,6 +183,7 @@ class SmsCodeView@JvmOverloads constructor(
     private fun setMechanic(){
         txtNumber1.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
+                txtNumber1.setSelection(txtNumber1.text.length)
                 if (p0?.length!! > 0) txtNumber2.requestFocus()
             }
 
@@ -196,6 +197,7 @@ class SmsCodeView@JvmOverloads constructor(
 
         txtNumber2.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
+                txtNumber2.setSelection(txtNumber2.text.length)
                 if (p0?.length!! > 0) {
                     txtNumber3.requestFocus()
                 } else {
@@ -213,6 +215,7 @@ class SmsCodeView@JvmOverloads constructor(
 
         txtNumber3.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
+                txtNumber3.setSelection(txtNumber3.text.length)
                 if (p0?.length!! > 0) {
                     txtNumber4.requestFocus()
                 } else {
@@ -230,6 +233,7 @@ class SmsCodeView@JvmOverloads constructor(
 
         txtNumber4.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
+                txtNumber4.setSelection(txtNumber4.text.length)
                 if (p0?.length!! == 0) txtNumber3.requestFocus()
             }
 

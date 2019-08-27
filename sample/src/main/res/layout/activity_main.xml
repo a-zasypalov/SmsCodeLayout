@@ -14,12 +14,12 @@
         app:actionText="Action text"
         app:actionTextColor="@color/colorAccent"
         app:actionTextSize="16sp"
-        app:smsActionTextStyle="italic"
         app:buttonStyle="@style/AppTheme"
         app:numberBackground="@drawable/rounded_card_grey"
-        app:titleText="Title"
+        app:smsActionTextStyle="italic"
         app:smsTitleTextStyle="bold"
+        app:titleText="Title"
         app:titleTextColor="@color/colorBlue"
-        app:titleTextSize="24sp"/>
+        app:titleTextSize="24sp" />
 
 </FrameLayout>
