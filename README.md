@@ -9,7 +9,7 @@ Download
 
 Grab via Gradle:
 ```groovy
-implementation 'com.gaoyun.smscodelayout:smscodelayout:0.2.1'
+implementation 'com.gaoyun.smscodelayout:smscodelayout:0.2.2'
 ```
 
 SmsCodeLayout uses the Material library, so you should include it too:
