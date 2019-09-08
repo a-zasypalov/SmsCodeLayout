@@ -5,11 +5,11 @@ Simple and customizable view for input a 4-digit code from SMS
 
 Download
 --------
-[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.2.2) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.2.2/link)
+[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.2.3) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.2.3/link)
 
 Grab via Gradle:
 ```groovy
-implementation 'com.gaoyun.smscodelayout:smscodelayout:0.2.2'
+implementation 'com.gaoyun.smscodelayout:smscodelayout:0.2.3'
 ```
 
 SmsCodeLayout uses the Material library, so you should include it too:
