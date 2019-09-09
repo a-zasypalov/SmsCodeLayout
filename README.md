@@ -5,11 +5,11 @@ Simple and customizable view for input a 4-digit code from SMS
 
 Download
 --------
-[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.2.3) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.2.3/link)
+[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.3.1) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.3.1/link)
 
 Grab via Gradle:
 ```groovy
-implementation 'com.gaoyun.smscodelayout:smscodelayout:0.2.3'
+implementation 'com.gaoyun.smscodelayout:smscodelayout:0.3.1'
 ```
 
 SmsCodeLayout uses the Material library, so you should include it too:
@@ -76,6 +76,23 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+You can add SmsCodeWatchers to observe code events:
+```kotlin
+smsCodeView.addCodeCompleteWatcher(object: SmsCodeCompleteWatcher{
+    override fun codeCompleteChanged(complete: Boolean) {
+        if(complete) {
+            Toast.makeText(this@MainActivity, "Code has 4 numbers", Toast.LENGTH_SHORT).show()
+        }
+    }
+})
+
+smsCodeView.addCodeLengthWatcher(object: SmsCodeLengthWatcher{
+    override fun codeLengthChanged(length: Int) {
+        Toast.makeText(this@MainActivity, "Code length is $length", Toast.LENGTH_SHORT).show()
+    }
+})
+```
+
 If you want to activate SMS catching just initialize SmsCatcher:
 ```kotlin
 val smsRequestCode = 243 //or any other free request code
