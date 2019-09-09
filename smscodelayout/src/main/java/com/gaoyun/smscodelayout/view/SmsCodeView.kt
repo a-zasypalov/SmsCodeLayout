@@ -12,17 +12,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.gaoyun.smscodelayout.R
 import kotlinx.android.synthetic.main.view_sms_code.view.*
+import kotlin.properties.Delegates
 
 
-class SmsCodeView@JvmOverloads constructor(
+class SmsCodeView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr)  {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     companion object {
         const val NORMAL_STYLE = 0
@@ -30,6 +30,23 @@ class SmsCodeView@JvmOverloads constructor(
         const val ITALIC_STYLE = 2
         const val BOLD_ITALIC_STYLE = 3
     }
+
+    private var codeLengthWatcher: SmsCodeLengthWatcher? = null
+    private var codeCompleteWatcher: SmsCodeCompleteWatcher? = null
+
+    var codeLength: Int by Delegates.observable(
+        initialValue = 0,
+        onChange = { _, _, newValue ->
+            codeLengthWatcher?.codeLengthChanged(newValue)
+        }
+    )
+
+    var codeComplete: Boolean by Delegates.observable(
+        initialValue = false,
+        onChange = { _, _, newValue ->
+            codeCompleteWatcher?.codeCompleteChanged(newValue)
+        }
+    )
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sms_code, this, true)
@@ -90,24 +107,20 @@ class SmsCodeView@JvmOverloads constructor(
         }
     }
 
+    fun addCodeLengthWatcher(watcher: SmsCodeLengthWatcher) {
+        codeLengthWatcher = watcher
+    }
+
+    fun addCodeCompleteWatcher(watcher: SmsCodeCompleteWatcher) {
+        codeCompleteWatcher = watcher
+    }
+
     fun getCode(): String {
         return "${txtNumber1.text}${txtNumber2.text}${txtNumber3.text}${txtNumber4.text}"
     }
 
     fun setCode(code: String) {
-//        when {
-//            code.length < 4 -> Toast.makeText(
-//                context,
-//                "Code is too short!",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            code.length > 4 -> {
-//                Toast.makeText(context, "Code is too long!", Toast.LENGTH_SHORT).show()
-//                setCodeFromString(code)
-//            }
-//            else -> setCodeFromString(code)
-//        }
-        if(code.length == 4){
+        if (code.length == 4) {
             setCodeFromString(code)
         }
     }
@@ -213,6 +226,11 @@ class SmsCodeView@JvmOverloads constructor(
         }
     }
 
+    private fun updateWatchersValues(){
+        codeLength = getCode().length
+        codeComplete = getCode().length == 4
+    }
+
     private fun setMechanic() {
         txtNumber1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -228,6 +246,7 @@ class SmsCodeView@JvmOverloads constructor(
                         txtNumber1.setText(p0.last().toString())
                     }
                 }
+                updateWatchersValues()
             }
 
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -252,6 +271,7 @@ class SmsCodeView@JvmOverloads constructor(
                         txtNumber2.setText(p0.last().toString())
                     }
                 }
+                updateWatchersValues()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -276,6 +296,7 @@ class SmsCodeView@JvmOverloads constructor(
                         txtNumber3.setText(p0.last().toString())
                     }
                 }
+                updateWatchersValues()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -299,6 +320,7 @@ class SmsCodeView@JvmOverloads constructor(
                         txtNumber4.setText(p0.last().toString())
                     }
                 }
+                updateWatchersValues()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
