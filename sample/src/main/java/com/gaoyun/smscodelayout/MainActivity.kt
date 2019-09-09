@@ -5,7 +5,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.gaoyun.smscodelayout.catcher.SmsCatcher
+import com.gaoyun.smscodelayout.view.SmsCodeCompleteWatcher
+import com.gaoyun.smscodelayout.view.SmsCodeLengthWatcher
 import com.gaoyun.smscodelayout.view.SmsCodeView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -45,6 +48,20 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.setOnActionDoneClickListener {
             //do something
         }
+
+        smsCodeView.addCodeCompleteWatcher(object: SmsCodeCompleteWatcher{
+            override fun codeCompleteChanged(complete: Boolean) {
+                if(complete) {
+                    Toast.makeText(this@MainActivity, "Code completed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        smsCodeView.addCodeLengthWatcher(object: SmsCodeLengthWatcher{
+            override fun codeLengthChanged(length: Int) {
+                Toast.makeText(this@MainActivity, "Code length is $length", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         smsCatcher.startCatchSms()
 
