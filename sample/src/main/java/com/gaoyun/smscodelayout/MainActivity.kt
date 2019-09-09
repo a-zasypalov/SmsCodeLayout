@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         smsCodeView.addCodeCompleteWatcher(object: SmsCodeCompleteWatcher{
             override fun codeCompleteChanged(complete: Boolean) {
                 if(complete) {
-                    Toast.makeText(this@MainActivity, "Code completed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Code has 4 numbers", Toast.LENGTH_SHORT).show()
                 }
             }
         })
