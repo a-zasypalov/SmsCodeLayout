@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SmsCodeLayout</string>
 
-    <string name="resend_sms">Отправить SMS еще раз</string>
-    <string name="resend_sms_timer">Код отправлен, отправить повторно\nможно через %d мин %d сек</string>
+    <string name="resend_sms">Resend SMS</string>
+    <string name="resend_sms_timer">You can resend code in %d min %d sec</string>
 </resources>
