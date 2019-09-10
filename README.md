@@ -5,11 +5,11 @@ Simple and customizable view for input a 4-digit code from SMS
 
 Download
 --------
-[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.3.1) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.3.1/link)
+[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.4.0) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.4.0/link)
 
 Grab via Gradle:
 ```groovy
-implementation 'com.gaoyun.smscodelayout:smscodelayout:0.3.1'
+implementation 'com.gaoyun.smscodelayout:smscodelayout:0.4.0'
 ```
 
 SmsCodeLayout uses the Material library, so you should include it too:
@@ -17,7 +17,7 @@ SmsCodeLayout uses the Material library, so you should include it too:
 implementation 'com.google.android.material:material:1.0.0'
 ```
 
-Usage
+Basic usage
 --------
 Just include SmsCodeView in your layout:
 ```xml
@@ -36,6 +36,7 @@ Just include SmsCodeView in your layout:
         app:titleTextColor="@color/colorBlue"
         app:titleTextSize="24sp" />
 ```
+
 You can customize attributes in Activity/Fragment/etc too:
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+
 You can add SmsCodeWatchers to observe code events:
 ```kotlin
 smsCodeView.addCodeCompleteWatcher(object: SmsCodeCompleteWatcher{
@@ -92,7 +94,33 @@ smsCodeView.addCodeLengthWatcher(object: SmsCodeLengthWatcher{
     }
 })
 ```
+Resend Sms timer
+---------
+You can add timer before user will can call resend sms (or any other action).
+```kotlin
+smsCodeView.setOnActionClickListener(View.OnClickListener {
+    smsCodeView.addTimerToRepeatAction(70, TimeUnit.SECONDS, object: SmsCodeTimeEmitter{
+        override fun onTick(min: Int, sec: Int) {
+            smsCodeView.setActionText(resources.getString(R.string.resend_sms_timer, min, sec))
+        }
 
+        override fun onTimerStop() {
+            smsCodeView.setActionText(resources.getString(R.string.resend_sms))
+        }
+    })
+})
+```
+!IMPORTANT
+Dont forget clear timer:
+```kotlin
+override fun onStop() {
+    super.onStop()
+    smsCodeView.clearTimerToRepeatAction()
+}
+```
+
+SmsCatcher
+-----------
 If you want to activate SMS catching just initialize SmsCatcher:
 ```kotlin
 val smsRequestCode = 243 //or any other free request code
