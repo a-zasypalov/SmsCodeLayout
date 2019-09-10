@@ -118,6 +118,8 @@ override fun onStop() {
     smsCodeView.clearTimerToRepeatAction()
 }
 ```
+Result:
+<img src="https://github.com/gaoyundexinmen/SmsCodeLayout/raw/master/screenshot1.jpg">
 
 SmsCatcher
 -----------
