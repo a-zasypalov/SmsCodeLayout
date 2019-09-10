@@ -16,7 +16,18 @@ import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.gaoyun.smscodelayout.R
+import com.gaoyun.smscodelayout.interfaces.SmsCodeCompleteWatcher
+import com.gaoyun.smscodelayout.interfaces.SmsCodeLengthWatcher
+import com.gaoyun.smscodelayout.interfaces.SmsCodeTimeEmitter
 import kotlinx.android.synthetic.main.view_sms_code.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 
@@ -47,6 +58,9 @@ class SmsCodeView @JvmOverloads constructor(
             codeCompleteWatcher?.codeCompleteChanged(newValue)
         }
     )
+
+    @ObsoleteCoroutinesApi
+    private val tickerChannel = ticker(delayMillis = 1_000, initialDelayMillis = 0)
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sms_code, this, true)
@@ -229,6 +243,36 @@ class SmsCodeView @JvmOverloads constructor(
     private fun updateWatchersValues(){
         codeLength = getCode().length
         codeComplete = getCode().length == 4
+    }
+
+    @ObsoleteCoroutinesApi
+    fun addTimerToRepeatAction(time: Long, units: TimeUnit, timerEmitter: SmsCodeTimeEmitter){
+        val timer = units.toMillis(time)
+        val startTime = System.currentTimeMillis()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            for (event in tickerChannel) {
+                val timeBeforeAction = timer - (System.currentTimeMillis() - startTime)
+                if(timeBeforeAction < 1_000){
+                    tickerChannel.cancel()
+
+                    timerEmitter.onTimerStop()
+                    btnAction.isClickable = true
+                } else {
+                    val sdfMin = SimpleDateFormat("mm", Locale.getDefault())
+                    val sdfSec = SimpleDateFormat("ss", Locale.getDefault())
+                    val date = Date(timeBeforeAction)
+
+                    timerEmitter.onTick(sdfMin.format(date).toInt(), sdfSec.format(date).toInt())
+                    btnAction.isClickable = false
+                }
+            }
+        }
+    }
+
+    @ObsoleteCoroutinesApi
+    fun clearTimerToRepeatAction(){
+        tickerChannel.cancel()
     }
 
     private fun setMechanic() {
