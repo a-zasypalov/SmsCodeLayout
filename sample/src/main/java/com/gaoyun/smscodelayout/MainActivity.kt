@@ -9,8 +9,10 @@ import android.widget.Toast
 import com.gaoyun.smscodelayout.catcher.SmsCatcher
 import com.gaoyun.smscodelayout.interfaces.SmsCodeCompleteWatcher
 import com.gaoyun.smscodelayout.interfaces.SmsCodeLengthWatcher
+import com.gaoyun.smscodelayout.interfaces.SmsCodeTimeEmitter
 import com.gaoyun.smscodelayout.view.SmsCodeView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        smsCodeView.setActionText("Action")
+        smsCodeView.setActionText(resources.getString(R.string.resend_sms))
         smsCodeView.setTitleText("Title")
 
         smsCodeView.setTitleTextSize(24f)
@@ -65,6 +67,18 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        smsCodeView.setOnActionClickListener(View.OnClickListener {
+            smsCodeView.addTimerToRepeatAction(70, TimeUnit.SECONDS, object: SmsCodeTimeEmitter{
+                override fun onTick(min: Int, sec: Int) {
+                    smsCodeView.setActionText(resources.getString(R.string.resend_sms_timer, min, sec))
+                }
+
+                override fun onTimerStop() {
+                    smsCodeView.setActionText(resources.getString(R.string.resend_sms))
+                }
+            })
+        })
+
         smsCatcher.startCatchSms()
 
     }
@@ -79,5 +93,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        smsCodeView.clearTimerToRepeatAction()
     }
 }
