@@ -89,14 +89,15 @@ class MainActivity : AppCompatActivity() {
             smsRequestCode ->
                 if (resultCode == Activity.RESULT_OK) {
                     data?.let {
-                        smsCodeView.setCode(smsCatcher.getCodeFromSms(data))
+                        val message = smsCatcher.getSmsMessage(data)
+                        smsCodeView.setCode(message)
                     }
                 }
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         smsCodeView.clearTimerToRepeatAction()
     }
 }
