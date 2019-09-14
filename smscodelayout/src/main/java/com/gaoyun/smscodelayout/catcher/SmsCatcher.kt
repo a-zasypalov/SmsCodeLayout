@@ -43,7 +43,7 @@ class SmsCatcher(
         activity.registerReceiver(smsVerificationReceiver, intentFilter)
     }
 
-    fun getCodeFromSms(data: Intent?): String{
+    fun getSmsMessage(data: Intent?): String {
         return data?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE) ?: ""
     }
 

@@ -16,7 +16,7 @@ ext {
     siteUrl = 'https://github.com/gaoyundexinmen/SmsCodeLayout'
     gitUrl = 'https://github.com/gaoyundexinmen/SmsCodeLayout'
 
-    libraryVersion = '0.4.0'
+    libraryVersion = '0.4.1'
 
     developerId = 'gaoyundexinmen'
     developerName = 'Artem Zasypalov'
@@ -35,7 +35,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 7
-        versionName "0.4.0"
+        versionName "0.4.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
