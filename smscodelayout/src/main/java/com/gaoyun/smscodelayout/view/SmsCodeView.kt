@@ -60,7 +60,7 @@ class SmsCodeView @JvmOverloads constructor(
     )
 
     @ObsoleteCoroutinesApi
-    private val tickerChannel = ticker(delayMillis = 1_000, initialDelayMillis = 0)
+    private var tickerChannel = ticker(delayMillis = 1_000, initialDelayMillis = 0)
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sms_code, this, true)
@@ -250,6 +250,7 @@ class SmsCodeView @JvmOverloads constructor(
         val timer = units.toMillis(time)
         val startTime = System.currentTimeMillis()
 
+        tickerChannel = ticker(delayMillis = 1_000, initialDelayMillis = 0)
         CoroutineScope(Dispatchers.Main).launch {
             for (event in tickerChannel) {
                 val timeBeforeAction = timer - (System.currentTimeMillis() - startTime)
@@ -273,6 +274,7 @@ class SmsCodeView @JvmOverloads constructor(
     @ObsoleteCoroutinesApi
     fun clearTimerToRepeatAction(){
         tickerChannel.cancel()
+        btnAction.isClickable = true
     }
 
     private fun setMechanic() {
