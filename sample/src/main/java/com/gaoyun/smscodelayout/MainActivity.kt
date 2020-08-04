@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        smsCatcher.unbindCatcher()
         smsCodeView.clearTimerToRepeatAction()
     }
 }

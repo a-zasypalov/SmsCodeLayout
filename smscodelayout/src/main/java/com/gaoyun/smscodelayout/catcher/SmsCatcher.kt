@@ -47,4 +47,8 @@ class SmsCatcher(
         return data?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE) ?: ""
     }
 
+    fun unbindCatcher() {
+        activity.unregisterReceiver(smsVerificationReceiver)
+    }
+
 }

@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -74,45 +75,29 @@ class SmsCodeView @JvmOverloads constructor(
             setTitleText(styledAttributes.getString(R.styleable.SmsCodeView_titleText))
             setTitleTextColor(
                 styledAttributes.getColor(
-                    R.styleable.SmsCodeView_titleTextColor, ContextCompat.getColor(
-                        context,
-                        R.color.textColorPrimary
-                    )
+                    R.styleable.SmsCodeView_titleTextColor,
+                    ContextCompat.getColor(context, R.color.textColorPrimary)
                 )
             )
             setTitleTextSize(
-                styledAttributes.getDimension(
-                    R.styleable.SmsCodeView_titleTextSize,
-                    14f
-                )
+                styledAttributes.getDimension(R.styleable.SmsCodeView_titleTextSize, 14f)
             )
             setTitleTextStyle(
-                styledAttributes.getInt(
-                    R.styleable.SmsCodeView_smsTitleTextStyle,
-                    NORMAL_STYLE
-                )
+                styledAttributes.getInt(R.styleable.SmsCodeView_smsTitleTextStyle, NORMAL_STYLE)
             )
 
             setActionText(styledAttributes.getString(R.styleable.SmsCodeView_actionText))
             setActionTextColor(
                 styledAttributes.getColor(
-                    R.styleable.SmsCodeView_actionTextColor, ContextCompat.getColor(
-                        context,
-                        R.color.colorBlue
-                    )
+                    R.styleable.SmsCodeView_actionTextColor,
+                    ContextCompat.getColor(context, R.color.colorBlue)
                 )
             )
             setActionTextSize(
-                styledAttributes.getDimension(
-                    R.styleable.SmsCodeView_actionTextSize,
-                    14f
-                )
+                styledAttributes.getDimension(R.styleable.SmsCodeView_actionTextSize, 14f)
             )
             setActionTextStyle(
-                styledAttributes.getInt(
-                    R.styleable.SmsCodeView_smsActionTextStyle,
-                    NORMAL_STYLE
-                )
+                styledAttributes.getInt(R.styleable.SmsCodeView_smsActionTextStyle, NORMAL_STYLE)
             )
 
             setMechanic()
@@ -207,8 +192,8 @@ class SmsCodeView @JvmOverloads constructor(
     fun hideSoftKeyboardOnLastNumberInput(hide: Boolean, activity: Activity) {
         if (hide) {
             txtNumber4.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                    if (p0?.length!! > 0) hideSoftKeyboard(activity)
+                override fun afterTextChanged(code: Editable?) {
+                    if (code?.length ?: 0 > 0) hideSoftKeyboard(activity)
                 }
 
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -240,13 +225,18 @@ class SmsCodeView @JvmOverloads constructor(
         }
     }
 
-    private fun updateWatchersValues(){
+    private fun showSoftKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, 0)
+    }
+
+    private fun updateWatchersValues() {
         codeLength = getCode().length
         codeComplete = getCode().length == 4
     }
 
     @ObsoleteCoroutinesApi
-    fun addTimerToRepeatAction(time: Long, units: TimeUnit, timerEmitter: SmsCodeTimeEmitter){
+    fun addTimerToRepeatAction(time: Long, units: TimeUnit, timerEmitter: SmsCodeTimeEmitter) {
         val timer = units.toMillis(time)
         val startTime = System.currentTimeMillis()
 
@@ -254,7 +244,7 @@ class SmsCodeView @JvmOverloads constructor(
         CoroutineScope(Dispatchers.Main).launch {
             for (event in tickerChannel) {
                 val timeBeforeAction = timer - (System.currentTimeMillis() - startTime)
-                if(timeBeforeAction < 1_000){
+                if (timeBeforeAction < 1_000) {
                     tickerChannel.cancel()
 
                     timerEmitter.onTimerStop()
@@ -272,24 +262,93 @@ class SmsCodeView @JvmOverloads constructor(
     }
 
     @ObsoleteCoroutinesApi
-    fun clearTimerToRepeatAction(){
+    fun clearTimerToRepeatAction() {
         tickerChannel.cancel()
         btnAction.isClickable = true
+
     }
 
     private fun setMechanic() {
+        txtNumber1.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    txtNumber1.apply {
+                        isFocusable = true
+                        requestFocus()
+                        setSelection(txtNumber1.text.length)
+                        showSoftKeyboard(this)
+                    }
+                }
+                MotionEvent.ACTION_UP -> v.performClick()
+                else -> {
+                }
+            }
+            true
+        }
+
+        txtNumber2.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    txtNumber2.apply {
+                        isFocusable = true
+                        requestFocus()
+                        setSelection(txtNumber2.text.length)
+                        showSoftKeyboard(this)
+                    }
+                }
+                MotionEvent.ACTION_UP -> v.performClick()
+                else -> {
+                }
+            }
+            true
+        }
+
+        txtNumber3.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    txtNumber3.apply {
+                        isFocusable = true
+                        requestFocus()
+                        setSelection(txtNumber3.text.length)
+                        showSoftKeyboard(this)
+                    }
+                }
+                MotionEvent.ACTION_UP -> v.performClick()
+                else -> {
+                }
+            }
+            true
+        }
+
+        txtNumber4.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    txtNumber4.apply {
+                        isFocusable = true
+                        requestFocus()
+                        setSelection(txtNumber4.text.length)
+                        showSoftKeyboard(this)
+                    }
+                }
+                MotionEvent.ACTION_UP -> v.performClick()
+                else -> {
+                }
+            }
+            true
+        }
+
         txtNumber1.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                p0.let {
-                    if (p0!!.length == 4) {
-                        setCodeFromString(p0.toString())
+            override fun afterTextChanged(code: Editable?) {
+                if (code != null) {
+                    if (code.length == 4) {
+                        setCodeFromString(code.toString())
                     } else if (txtNumber1.text.length == 1) {
                         txtNumber1.setSelection(txtNumber1.text.length)
-                        if (p0.isNotEmpty()) txtNumber2.requestFocus()
-                    } else if (p0.length > 4) {
-                        setCode(p0.toString().substring(0, 4))
-                    } else if (p0.isNotEmpty()) {
-                        txtNumber1.setText(p0.last().toString())
+                        if (code.isNotEmpty()) txtNumber2.requestFocus()
+                    } else if (code.length > 4) {
+                        setCode(code.toString().substring(0, 4))
+                    } else if (code.isNotEmpty()) {
+                        txtNumber1.setText(code.last().toString())
                     }
                 }
                 updateWatchersValues()
@@ -304,17 +363,17 @@ class SmsCodeView @JvmOverloads constructor(
         })
 
         txtNumber2.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                p0.let {
-                    if (p0!!.length == 4) {
-                        setCodeFromString(p0.toString())
+            override fun afterTextChanged(code: Editable?) {
+                if (code != null) {
+                    if (code.length == 4) {
+                        setCodeFromString(code.toString())
                     } else if (txtNumber2.text.length == 1) {
                         txtNumber2.setSelection(txtNumber2.text.length)
-                        if (p0.isNotEmpty()) txtNumber3.requestFocus()
-                    } else if (p0.length > 4) {
-                        setCode(p0.toString().substring(0, 4))
-                    } else if (p0.isNotEmpty()) {
-                        txtNumber2.setText(p0.last().toString())
+                        if (code.isNotEmpty()) txtNumber3.requestFocus()
+                    } else if (code.length > 4) {
+                        setCode(code.toString().substring(0, 4))
+                    } else if (code.isNotEmpty()) {
+                        txtNumber2.setText(code.last().toString())
                     }
                 }
                 updateWatchersValues()
@@ -329,17 +388,17 @@ class SmsCodeView @JvmOverloads constructor(
         })
 
         txtNumber3.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                p0.let {
-                    if (p0!!.length == 4) {
-                        setCodeFromString(p0.toString())
+            override fun afterTextChanged(code: Editable?) {
+                if (code != null) {
+                    if (code.length == 4) {
+                        setCodeFromString(code.toString())
                     } else if (txtNumber3.text.length == 1) {
                         txtNumber3.setSelection(txtNumber3.text.length)
-                        if (p0.isNotEmpty()) txtNumber4.requestFocus()
-                    } else if (p0.length > 4) {
-                        setCode(p0.toString().substring(0, 4))
-                    } else if (p0.isNotEmpty()) {
-                        txtNumber3.setText(p0.last().toString())
+                        if (code.isNotEmpty()) txtNumber4.requestFocus()
+                    } else if (code.length > 4) {
+                        setCode(code.toString().substring(0, 4))
+                    } else if (code.isNotEmpty()) {
+                        txtNumber3.setText(code.last().toString())
                     }
                 }
                 updateWatchersValues()
@@ -354,16 +413,21 @@ class SmsCodeView @JvmOverloads constructor(
         })
 
         txtNumber4.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                p0.let {
-                    if (p0!!.length == 4) {
-                        setCodeFromString(p0.toString())
-                    } else if (txtNumber4.text.length == 1) {
-                        txtNumber4.setSelection(txtNumber4.text.length)
-                    } else if (p0.length > 4) {
-                        setCode(p0.toString().substring(0, 4))
-                    } else if (p0.isNotEmpty()) {
-                        txtNumber4.setText(p0.last().toString())
+            override fun afterTextChanged(code: Editable?) {
+                if (code != null) {
+                    when {
+                        code.length == 4 -> {
+                            setCodeFromString(code.toString())
+                        }
+                        txtNumber4.text.length == 1 -> {
+                            txtNumber4.setSelection(txtNumber4.text.length)
+                        }
+                        code.length > 4 -> {
+                            setCode(code.toString().substring(0, 4))
+                        }
+                        code.isNotEmpty() -> {
+                            txtNumber4.setText(code.last().toString())
+                        }
                     }
                 }
                 updateWatchersValues()
