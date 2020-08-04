@@ -5,7 +5,7 @@ Simple and customizable view for input a 4-digit code from SMS
 
 Download
 --------
-[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg?version=0.4.2) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/0.4.2/link)
+[ ![Download](https://api.bintray.com/packages/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/images/download.svg) ](https://bintray.com/gaoyundexinmen/SmsCodeLayout/SmsCodeLayout/_latestVersion)
 
 Grab via Gradle:
 ```groovy
@@ -153,6 +153,16 @@ override fun onCreate(savedInstanceState: Bundle?) {
     //..
     smsCatcher.startCatchSms()
 }
+```
+
+Don't forget to unbind receiver:
+
+```kotlin
+override fun onDestroy() {
+        super.onDestroy()
+        smsCatcher.unbindCatcher()
+        smsCodeView.clearTimerToRepeatAction()
+    }
 ```
 
 License
