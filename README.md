@@ -9,7 +9,7 @@ Download
 
 Grab via Gradle:
 ```groovy
-implementation 'com.gaoyun.smscodelayout:smscodelayout:0.4.2'
+implementation 'com.gaoyun.smscodelayout:smscodelayout:0.5.0'
 ```
 
 Basic usage
