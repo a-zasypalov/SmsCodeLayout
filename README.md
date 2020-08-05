@@ -106,7 +106,7 @@ smsCodeView.setOnActionClickListener(View.OnClickListener {
 })
 ```
 !IMPORTANT
-Dont forget clear timer in onDestroy() method or before transition on the next screen:
+Dont forget clear timer in onDestroy() method or before transition to the next screen:
 ```kotlin
 override fun onDestroy() {
     super.onDestroy()
@@ -118,14 +118,22 @@ Result:
 
 SmsCatcher
 -----------
-If you want to activate SMS catching just initialize SmsCatcher:
+Init SmsCatcher if you want activate SMS catching:
 ```kotlin
 val smsRequestCode = 243 //or any other free request code
 val smsCatcher = SmsCatcher(this, smsRequestCode, "YOUR PHONE")
 ```
 
-In onActivityResult catch the case with your request code:
+And start SMS catching:
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    //..
+    smsCatcher.startCatchSms()
+}
+```
 
+Catch event by request code in onActivityResult callback:
 ```kotlin
 public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
@@ -140,18 +148,7 @@ public override fun onActivityResult(requestCode: Int, resultCode: Int, data: In
 }
 ```
 
-And start catch SMS:
-
-```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    //..
-    smsCatcher.startCatchSms()
-}
-```
-
 Don't forget to unbind receiver:
-
 ```kotlin
 override fun onDestroy() {
         super.onDestroy()
