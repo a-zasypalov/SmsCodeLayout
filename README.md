@@ -12,11 +12,6 @@ Grab via Gradle:
 implementation 'com.gaoyun.smscodelayout:smscodelayout:0.4.2'
 ```
 
-SmsCodeLayout uses the Material library, so you should include it too:
-```groovy
-implementation 'com.google.android.material:material:1.0.0'
-```
-
 Basic usage
 --------
 Just include SmsCodeView in your layout:
